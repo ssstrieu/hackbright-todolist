@@ -28,7 +28,6 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#populate-list-button').one('click', function() {
 		$.ajax({
 			url: 'test.json',
 			type: "GET",
@@ -39,5 +38,5 @@ $(document).ready(function() {
 				}
 			}
 		});
-	});
+	
 });
