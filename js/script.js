@@ -1,6 +1,21 @@
 $(document).ready(function() {
+	var ajaxPopulate= function(){
+		$.ajax({
+			url: 'test.json',
+			type: "GET",
+			dataType: "json",
+			success: function(response) {
+				for(var i=0; i<response.tasks.length; i++) {
+					addItemToList(response.tasks[i]);
+				}
+			}
+		});
+	}
+
+	ajaxPopulate();
+
 	var addItemToList = function(item) {
-		var $item = $('<span><input type="checkbox"x class="item"/><label>'+item+'</label><br/></span>');	
+		var $item = $('<span><input type="checkbox"x class="item"/>'+item+'<br/></span>');	
 		$('#todo-list').append($item);
 	};
 
@@ -14,7 +29,8 @@ $(document).ready(function() {
 
 	$('#remove-item-button').on('click', function(e) {
 		e.preventDefault();
-		$('.item:checked').closest('span').remove();
+		$('.item:checked').closest('span').wrap('<strike></strike>');
+		$('.item:checked').closest('.item').remove();
 	});
 
 	$('#ajax-button').one('click', function() {
@@ -27,16 +43,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-
-		$.ajax({
-			url: 'test.json',
-			type: "GET",
-			dataType: "json",
-			success: function(response) {
-				for(var i=0; i<response.tasks.length; i++) {
-					addItemToList(response.tasks[i]);
-				}
-			}
-		});
+	$('#populate-list-button').on('click',ajaxPopulate);
 	
 });
